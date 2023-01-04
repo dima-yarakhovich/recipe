@@ -1,4 +1,5 @@
 package com.skypro.recipe.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
