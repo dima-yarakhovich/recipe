@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 @Data
 @AllArgsConstructor
-public class Recipte {
+public class Recipe {
     private String name;
     private int cookingTime;
-    ArrayList<Ingridient> ingridients;
+    ArrayList<Ingredient> ingredients;
     ArrayList<String> steps;
 }

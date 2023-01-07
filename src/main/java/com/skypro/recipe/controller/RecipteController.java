@@ -1,7 +1,7 @@
 package com.skypro.recipe.controller;
 
-import com.skypro.recipe.model.Recipte;
-import com.skypro.recipe.service.impl.RecipteServiceImpl;
+import com.skypro.recipe.model.Recipe;
+import com.skypro.recipe.service.impl.RecipeServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -21,9 +21,9 @@ import java.util.Collection;
 @RequestMapping("/recipte")
 @Tag(name = "Рецепты",description = "Операции добавления/удаления/редактирования/просмотра рецептов:")
 public class RecipteController {
-    private final RecipteServiceImpl recipteService;
+    private final RecipeServiceImpl recipteService;
 
-    public RecipteController(RecipteServiceImpl recipteService) {
+    public RecipteController(RecipeServiceImpl recipteService) {
         this.recipteService = recipteService;
     }
 
@@ -40,13 +40,13 @@ public class RecipteController {
                     content = {
                             @Content(
                                     mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation =Recipte.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
                             )
                     }
             )
     })
-    public Recipte getRecipe(@PathVariable Long id) {
-        return this.recipteService.getRecipte(id);
+    public Recipe getRecipe(@PathVariable Long id) {
+        return this.recipteService.getRecipe(id);
     }
 
 
@@ -59,13 +59,13 @@ public class RecipteController {
                     content = {
                             @Content(
                                     mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation =Recipte.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
                             )
                     }
             )
     })
-    public ResponseEntity<?> addRecipe(@RequestBody Recipte recipte) {
-        return ResponseEntity.ok(recipteService.addRecipte(recipte));
+    public ResponseEntity<?> addRecipe(@RequestBody Recipe recipte) {
+        return ResponseEntity.ok(recipteService.addRecipe(recipte));
     }
 
     @GetMapping
@@ -77,13 +77,13 @@ public class RecipteController {
                     content = {
                             @Content(
                                     mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation =Recipte.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
                             )
                     }
             )
     })
-    public Collection<Recipte> getAllRecipte() {
-        return this.recipteService.getAllRecipte();
+    public Collection<Recipe> getAllRecipte() {
+        return this.recipteService.getAllRecipe();
     }
 
     @DeleteMapping("/{id}")
@@ -95,13 +95,13 @@ public class RecipteController {
                     content = {
                             @Content(
                                     mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation =Recipte.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
                             )
                     }
             )
     })
     public  ResponseEntity<Void> deleteRecipte(@PathVariable long id) {
-        if (recipteService.deleteRecipte(id)) {
+        if (recipteService.deleteRecipe(id)) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
@@ -115,14 +115,14 @@ public class RecipteController {
                     content = {
                             @Content(
                                     mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation =Recipte.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
                             )
                     }
             )
     })
     @Operation(summary = "Редактирование рецепта",description = "можно редактировать по порядковому номеру")
-    public ResponseEntity<Recipte> editRecipte(@PathVariable long id, @RequestBody Recipte recipte) {
-        Recipte recipte1 = recipteService.editRecipte(id, recipte);
+    public ResponseEntity<Recipe> editRecipte(@PathVariable long id, @RequestBody Recipe recipte) {
+        Recipe recipte1 = recipteService.editRecipe(id, recipte);
         if (recipte == null) {
             return ResponseEntity.notFound().build();
         }

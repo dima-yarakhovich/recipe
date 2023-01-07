@@ -1,8 +1,7 @@
 package com.skypro.recipe.controller;
 
-import com.skypro.recipe.model.Ingridient;
-import com.skypro.recipe.model.Recipte;
-import com.skypro.recipe.service.impl.IngridientServiceImpl;
+import com.skypro.recipe.model.Ingredient;
+import com.skypro.recipe.service.impl.IngredientServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -19,17 +18,17 @@ import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/ingridient")
+@RequestMapping("/ingredient")
 @Tag(name = "Ингредиенты", description = "Операции добавления/удаления/редактирования/просмотра ингредиентов:")
-public class IngridientController {
-    private final IngridientServiceImpl ingridientService;
+public class IngredientController {
+    private final IngredientServiceImpl ingredientService;
 
-    public IngridientController(IngridientServiceImpl ingridientService) {
-        this.ingridientService = ingridientService;
+    public IngredientController(IngredientServiceImpl ingredientService) {
+        this.ingredientService = ingredientService;
     }
 
     @PostMapping
-    @Operation(summary = "Добавление ингридиента")
+    @Operation(summary = "Добавление ингредиента")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -37,17 +36,17 @@ public class IngridientController {
                     content = {
                             @Content(
                                     mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Ingridient.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
                             )
                     }
             )
     })
-    public ResponseEntity<?> addIngridient(@RequestBody Ingridient ingridient) {
-        return ResponseEntity.ok(ingridientService.addIngridient(ingridient));
+    public ResponseEntity<?> addIngredient(@RequestBody Ingredient ingredient) {
+        return ResponseEntity.ok(ingredientService.addIngredient(ingredient));
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Просмотр ингридиента", description = "можно искать по порядковому номеру")
+    @Operation(summary = "Просмотр ингредиента", description = "можно искать по порядковому номеру")
     @Parameters(value = {
             @Parameter(example = "0-100")
 
@@ -59,21 +58,21 @@ public class IngridientController {
                     content = {
                             @Content(
                                     mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Ingridient.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
                             )
                     }
             )
     })
-    public ResponseEntity getIngridient(@PathVariable Long id) {
-        Ingridient ingridient = this.ingridientService.getIngridient(id);
-        if (ingridient == null) {
+    public ResponseEntity getIngredient(@PathVariable Long id) {
+        Ingredient ingredient = this.ingredientService.getIngredient(id);
+        if (ingredient == null) {
             ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ingridient);
+        return ResponseEntity.ok(ingredient);
     }
 
     @GetMapping
-    @Operation(summary = "Просмотр всех ингридиентов приложения")
+    @Operation(summary = "Просмотр всех ингредиентов приложения")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -81,17 +80,17 @@ public class IngridientController {
                     content = {
                             @Content(
                                     mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Ingridient.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
                             )
                     }
             )
     })
-    public Collection<Ingridient> getAllIngridient() {
-        return this.ingridientService.getAllIngridient();
+    public Collection<Ingredient> getAllIngredient() {
+        return this.ingredientService.getAllIngredient();
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Удаление ингридиента", description = "нужно удалять по порядковому номеру")
+    @Operation(summary = "Удаление ингредиента", description = "нужно удалять по порядковому номеру")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -99,38 +98,38 @@ public class IngridientController {
                     content = {
                             @Content(
                                     mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Ingridient.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
                             )
                     }
             )
     })
-    public ResponseEntity<Void> deleteIngridient(@PathVariable long id) {
-        if (ingridientService.deleteIngridient(id)) {
+    public ResponseEntity<Void> deleteIngredient(@PathVariable long id) {
+        if (ingredientService.deleteIngredient(id)) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Редактирование ингридиента", description = "можно редактировать по порядковому номеру")
+    @Operation(summary = "Редактирование ингредиента", description = "можно редактировать по порядковому номеру")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Ингредиент отредоктирован",
+                    description = "Ингредиент отредактирован",
                     content = {
                             @Content(
                                     mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Ingridient.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
                             )
                     }
             )
     })
-    public ResponseEntity<Ingridient> editIngridient(@PathVariable long id, @RequestBody Ingridient ingridient) {
-        Ingridient ingridient1 = ingridientService.editIngridient(id, ingridient);
-        if (ingridient == null) {
+    public ResponseEntity<Ingredient> editIngridient(@PathVariable long id, @RequestBody Ingredient ingredient) {
+        Ingredient ingredient1 = ingredientService.editIngredient(id, ingredient);
+        if (ingredient == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ingridient);
+        return ResponseEntity.ok(ingredient);
     }
 }
 
