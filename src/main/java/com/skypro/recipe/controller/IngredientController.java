@@ -63,7 +63,7 @@ public class IngredientController {
                     }
             )
     })
-    public ResponseEntity getIngredient(@PathVariable Long id) {
+    public ResponseEntity<?> getIngredient(@PathVariable Long id) {
         Ingredient ingredient = this.ingredientService.getIngredient(id);
         if (ingredient == null) {
             ResponseEntity.notFound().build();

@@ -1,23 +1,38 @@
 package com.skypro.recipe.service.impl;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skypro.recipe.model.Recipe;
+import com.skypro.recipe.service.FileServiceRecipe;
 import com.skypro.recipe.service.RecipeServices;
 import lombok.Data;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import java.util.*;
 
 @Service
 @Data
 public class RecipeServiceImpl implements RecipeServices {
-    private final Map<Long, Recipe> recipeMap = new HashMap<>();
+    private final Map<Long, Recipe> recipeMap = new LinkedHashMap<>();
     private static long lastId = 0;
+
+    final private FileServiceRecipe fileServiceRecipe;
+
+    public RecipeServiceImpl(FileServiceRecipe fileServiceRecipe) {
+        this.fileServiceRecipe = fileServiceRecipe;
+    }
+
+    @PostConstruct
+    private void init() {
+
+    }
 
 
     @Override
     public Recipe addRecipe(Recipe recipe) {
         recipeMap.put(this.lastId++, recipe);
+        saveToFile();
         return recipe;
     }
 
@@ -39,6 +54,7 @@ public class RecipeServiceImpl implements RecipeServices {
     public Recipe editRecipe(Long id, Recipe recipe) {
         if (recipeMap.containsKey(id)) {
             recipeMap.put(id, recipe);
+            saveToFile();
             return recipe;
         }
         return null;
@@ -48,4 +64,14 @@ public class RecipeServiceImpl implements RecipeServices {
     public List<Recipe> getAllRecipe() {
         return new ArrayList<>(this.recipeMap.values());
     }
+
+    private void saveToFile() {
+        try {
+            String json = new ObjectMapper().writeValueAsString(recipeMap);
+            fileServiceRecipe.saveToFile(json);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

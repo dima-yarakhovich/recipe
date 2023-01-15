@@ -18,17 +18,17 @@ import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/recipte")
-@Tag(name = "Рецепты",description = "Операции добавления/удаления/редактирования/просмотра рецептов:")
-public class RecipteController {
-    private final RecipeServiceImpl recipteService;
+@RequestMapping("/recipe")
+@Tag(name = "Рецепты", description = "Операции добавления/удаления/редактирования/просмотра рецептов:")
+public class RecipeController {
+    private final RecipeServiceImpl recipeService;
 
-    public RecipteController(RecipeServiceImpl recipteService) {
-        this.recipteService = recipteService;
+    public RecipeController(RecipeServiceImpl recipeService) {
+        this.recipeService = recipeService;
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Просмотр рецепта",description = "можно искать по порядковому номеру")
+    @Operation(summary = "Просмотр рецепта", description = "можно искать по порядковому номеру")
     @Parameters(value = {
             @Parameter(example = "0-100")
 
@@ -46,7 +46,7 @@ public class RecipteController {
             )
     })
     public Recipe getRecipe(@PathVariable Long id) {
-        return this.recipteService.getRecipe(id);
+        return this.recipeService.getRecipe(id);
     }
 
 
@@ -64,8 +64,8 @@ public class RecipteController {
                     }
             )
     })
-    public ResponseEntity<?> addRecipe(@RequestBody Recipe recipte) {
-        return ResponseEntity.ok(recipteService.addRecipe(recipte));
+    public ResponseEntity<?> addRecipe(@RequestBody Recipe recipe) {
+        return ResponseEntity.ok(recipeService.addRecipe(recipe));
     }
 
     @GetMapping
@@ -82,12 +82,12 @@ public class RecipteController {
                     }
             )
     })
-    public Collection<Recipe> getAllRecipte() {
-        return this.recipteService.getAllRecipe();
+    public Collection<Recipe> getAllRecipe() {
+        return this.recipeService.getAllRecipe();
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Удаление рецепта",description = "нужно удалять по порядковому номеру")
+    @Operation(summary = "Удаление рецепта", description = "нужно удалять по порядковому номеру")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -100,8 +100,8 @@ public class RecipteController {
                     }
             )
     })
-    public  ResponseEntity<Void> deleteRecipte(@PathVariable long id) {
-        if (recipteService.deleteRecipe(id)) {
+    public ResponseEntity<Void> deleteRecipe(@PathVariable long id) {
+        if (recipeService.deleteRecipe(id)) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
@@ -120,12 +120,12 @@ public class RecipteController {
                     }
             )
     })
-    @Operation(summary = "Редактирование рецепта",description = "можно редактировать по порядковому номеру")
-    public ResponseEntity<Recipe> editRecipte(@PathVariable long id, @RequestBody Recipe recipte) {
-        Recipe recipte1 = recipteService.editRecipe(id, recipte);
-        if (recipte == null) {
+    @Operation(summary = "Редактирование рецепта", description = "можно редактировать по порядковому номеру")
+    public ResponseEntity<Recipe> editRecipe(@PathVariable long id, @RequestBody Recipe recipe) {
+        Recipe recipe1 = recipeService.editRecipe(id, recipe);
+        if (recipe == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(recipte);
+        return ResponseEntity.ok(recipe);
     }
 }
