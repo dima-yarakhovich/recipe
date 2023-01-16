@@ -2,9 +2,9 @@ package com.skypro.recipe.service.impl;
 
 import com.skypro.recipe.service.FileServiceIngredient;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,7 +21,7 @@ public class FileServiceIngredientImpl implements FileServiceIngredient {
     public boolean saveToFile(String json) {
         Path path = Path.of(dataFilePath, dataFileName);
         try {
-            cleanDataFile();
+            cleanDataFileIngr();
             Files.writeString(path, json);
             return true;
         } catch (IOException e) {
@@ -42,9 +42,19 @@ public class FileServiceIngredientImpl implements FileServiceIngredient {
     }
 
     @Override
-    public boolean cleanDataFile() {
-        Path path = Path.of(dataFilePath, dataFileName);
+    public Path createTempFileIngr(String suffix) {
         try {
+            return Files.createTempFile(Path.of(dataFilePath), "tempFile", "suffix");   //временный файл
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Override
+    public boolean cleanDataFileIngr() {
+        try {
+            Path path = Path.of(dataFilePath, dataFileName);
             Files.deleteIfExists(path);
             Files.createFile(path);
             return true;
@@ -52,5 +62,10 @@ public class FileServiceIngredientImpl implements FileServiceIngredient {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public File getDataFileIngr() {
+        return new File(dataFilePath + "/" + dataFileName);
     }
 }

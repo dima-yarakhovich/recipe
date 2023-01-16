@@ -1,6 +1,7 @@
 package com.skypro.recipe.service;
 
-import org.springframework.stereotype.Repository;
+import java.io.File;
+import java.nio.file.Path;
 
 
 public interface FileServiceIngredient {
@@ -8,9 +9,11 @@ public interface FileServiceIngredient {
 
     String readFromFile();
 
-    boolean cleanDataFile();
+
+    boolean cleanDataFileIngr();
 
 
+    File getDataFileIngr();
 }
 
 

@@ -1,10 +1,10 @@
 package com.skypro.recipe.service.impl;
 
-import com.skypro.recipe.service.FileServiceIngredient;
 import com.skypro.recipe.service.FileServiceRecipe;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,9 +42,18 @@ public class FileServiceRecipeImpl implements FileServiceRecipe {
     }
 
     @Override
-    public boolean cleanDataFile() {
-        Path path = Path.of(dataFilePath, dataFileName);
+    public Path createTempFile(String suffix) {
         try {
+            return Files.createTempFile(Path.of(dataFilePath), "tempFile", "suffix");   //временный файл
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean cleanDataFile() {
+        try {
+            Path path = Path.of(dataFilePath, dataFileName);
             Files.deleteIfExists(path);
             Files.createFile(path);
             return true;
@@ -53,5 +62,11 @@ public class FileServiceRecipeImpl implements FileServiceRecipe {
             throw new RuntimeException(e);
         }
     }
-}
 
+    @Override
+    public File getDataFile() {
+        return new File(dataFilePath + "/" + dataFileName);
+    }
+
+
+}
