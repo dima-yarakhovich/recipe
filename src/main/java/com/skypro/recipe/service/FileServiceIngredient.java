@@ -10,6 +10,8 @@ public interface FileServiceIngredient {
     String readFromFile();
 
 
+    Path createTempFileIngr(String suffix);
+
     boolean cleanDataFileIngr();
 
 

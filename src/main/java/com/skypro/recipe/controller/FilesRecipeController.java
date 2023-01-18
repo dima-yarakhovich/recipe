@@ -1,7 +1,11 @@
 package com.skypro.recipe.controller;
 
 
+import com.skypro.recipe.model.Ingredient;
 import com.skypro.recipe.service.FileServiceRecipe;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +28,12 @@ public class FilesRecipeController {
     }
 
     @GetMapping(value = "/export")
+    @Operation(summary = "Скачивание рецептов в формате txt",
+            description = "можно скачать рецепты в txt")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Запрос выполнился"),
+            @ApiResponse(responseCode = "400", description = "имеется ошибка в параметрах запроса"),
+            @ApiResponse(responseCode = "404", description = "такого действия не существует либо URL неверный в веб-приложении"),
+            @ApiResponse(responseCode = "500", description = "во время выполнения запроса произошла ошибка на сервере")})
     public ResponseEntity<InputStreamResource> downloadDataFile() throws FileNotFoundException {
         File file = fileServiceRecipe.getDataFile();
         if (file.exists()) {                                                                                               //проверяем, что он существует
@@ -40,6 +50,12 @@ public class FilesRecipeController {
     }
 
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Добавление рецептов из файла",
+            description = "можно добавить рецепты в том числе из файла txt")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Запрос выполнился"),
+            @ApiResponse(responseCode = "400", description = "имеется ошибка в параметрах запроса"),
+            @ApiResponse(responseCode = "404", description = "такого действия не существует либо URL неверный в веб-приложении"),
+            @ApiResponse(responseCode = "500", description = "во время выполнения запроса произошла ошибка на сервере")})
     public ResponseEntity<Void> uploadDataFile(@RequestParam MultipartFile file) {
         fileServiceRecipe.cleanDataFile();
         File dataFile = fileServiceRecipe.getDataFile();
@@ -51,6 +67,7 @@ public class FilesRecipeController {
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+
 
 
 }

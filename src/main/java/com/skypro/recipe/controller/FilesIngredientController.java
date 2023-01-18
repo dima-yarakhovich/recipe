@@ -30,7 +30,7 @@ public class FilesIngredientController {
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)                                                       //заголовок запроса
                     .contentLength(file.length())
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"List_Ingr.json\"")  //чтобы добавить заголовок вручную
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"List_Ingr.json\"")        //чтобы добавить заголовок вручную
                     .body(resource);                                                                                       //передаем тело/сам инпутстриим
 
         } else {

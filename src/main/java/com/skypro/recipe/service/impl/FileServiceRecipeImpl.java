@@ -15,6 +15,9 @@ public class FileServiceRecipeImpl implements FileServiceRecipe {
     private String dataFilePath;
     @Value("${name1.to.data.file}")
     private String dataFileName;
+    private String suffix;
+
+
 
 
     @Override
@@ -31,7 +34,7 @@ public class FileServiceRecipeImpl implements FileServiceRecipe {
     }
 
     @Override
-    public String readFromFile() {
+    public String readRecipeFromFile() {
         Path path = Path.of(dataFilePath, dataFileName);
         try {
             return Files.readString(path);
@@ -43,6 +46,7 @@ public class FileServiceRecipeImpl implements FileServiceRecipe {
 
     @Override
     public Path createTempFile(String suffix) {
+        this.suffix = suffix;
         try {
             return Files.createTempFile(Path.of(dataFilePath), "tempFile", "suffix");   //временный файл
         } catch (IOException e) {
@@ -67,6 +71,7 @@ public class FileServiceRecipeImpl implements FileServiceRecipe {
     public File getDataFile() {
         return new File(dataFilePath + "/" + dataFileName);
     }
+
 
 
 }

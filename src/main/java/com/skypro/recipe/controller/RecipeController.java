@@ -34,17 +34,11 @@ public class RecipeController {
 
     })
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Рецепт найден",
-                    content = {
-                            @Content(
-                                    mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
-                            )
-                    }
-            )
-    })
+            @ApiResponse(responseCode = "200", description = "Рецепт найден"),
+            @ApiResponse(responseCode = "400", description = "имеется ошибка в параметрах запроса"),
+            @ApiResponse(responseCode = "404", description = "такого действия не существует либо URL неверный в веб-приложении"),
+            @ApiResponse(responseCode = "500", description = "во время выполнения запроса произошла ошибка на сервере")})
+
     public Recipe getRecipe(@PathVariable Long id) {
         return this.recipeService.getRecipe(id);
     }
@@ -53,17 +47,10 @@ public class RecipeController {
     @PostMapping
     @Operation(summary = "Добавление рецепта")
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Рецепт добавлен",
-                    content = {
-                            @Content(
-                                    mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
-                            )
-                    }
-            )
-    })
+            @ApiResponse(responseCode = "200", description = "Рецепт добавлен"),
+            @ApiResponse(responseCode = "400", description = "имеется ошибка в параметрах запроса"),
+            @ApiResponse(responseCode = "404", description = "такого действия не существует либо URL неверный в веб-приложении"),
+            @ApiResponse(responseCode = "500", description = "во время выполнения запроса произошла ошибка на сервере")})
     public ResponseEntity<?> addRecipe(@RequestBody Recipe recipe) {
         return ResponseEntity.ok(recipeService.addRecipe(recipe));
     }
@@ -89,17 +76,10 @@ public class RecipeController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Удаление рецепта", description = "нужно удалять по порядковому номеру")
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Рецепт удален",
-                    content = {
-                            @Content(
-                                    mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
-                            )
-                    }
-            )
-    })
+            @ApiResponse(responseCode = "200", description = "Рецепт удален"),
+            @ApiResponse(responseCode = "400", description = "имеется ошибка в параметрах запроса"),
+            @ApiResponse(responseCode = "404", description = "такого действия не существует либо URL неверный в веб-приложении"),
+            @ApiResponse(responseCode = "500", description = "во время выполнения запроса произошла ошибка на сервере")})
     public ResponseEntity<Void> deleteRecipe(@PathVariable long id) {
         if (recipeService.deleteRecipe(id)) {
             return ResponseEntity.ok().build();
@@ -109,17 +89,10 @@ public class RecipeController {
 
     @PutMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Рецепт отредактирован",
-                    content = {
-                            @Content(
-                                    mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Recipe.class))
-                            )
-                    }
-            )
-    })
+            @ApiResponse(responseCode = "200", description = "Рецепт отредактирован"),
+            @ApiResponse(responseCode = "400", description = "имеется ошибка в параметрах запроса"),
+            @ApiResponse(responseCode = "404", description = "такого действия не существует либо URL неверный в веб-приложении"),
+            @ApiResponse(responseCode = "500", description = "во время выполнения запроса произошла ошибка на сервере")})
     @Operation(summary = "Редактирование рецепта", description = "можно редактировать по порядковому номеру")
     public ResponseEntity<Recipe> editRecipe(@PathVariable long id, @RequestBody Recipe recipe) {
         Recipe recipe1 = recipeService.editRecipe(id, recipe);

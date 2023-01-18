@@ -9,11 +9,14 @@ import java.nio.file.Path;
 public interface FileServiceRecipe {
     boolean saveToFile(String json);
 
-    String readFromFile();
+    String readRecipeFromFile();
 
 
     boolean cleanDataFile();
 
 
     File getDataFile();
+
+
+    Path createTempFile(String suffix);
 }

@@ -36,7 +36,7 @@ public class IngredientController {
     }
 
     @PostMapping
-    @Operation(summary = "Добавление ингредиента")
+    @Operation(summary = "Добавление ингредиента", description = "Для добавления ингредиента необходимо названиие, кол-во и едю измерения")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -59,18 +59,11 @@ public class IngredientController {
             @Parameter(example = "0-100")
 
     })
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Просмотр ингредиента",
-                    content = {
-                            @Content(
-                                    mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
-                            )
-                    }
-            )
-    })
+    @ApiResponses(value =  {@ApiResponse(responseCode = "200", description = "ингредиент был найден"),
+            @ApiResponse(responseCode = "400", description = "имеется ошибка в параметрах запроса"),
+            @ApiResponse(responseCode = "404", description = "такого действия не существует либо URL неверный в веб-приложении"),
+            @ApiResponse(responseCode = "500", description = "во время выполнения запроса произошла ошибка на сервере")})
+
     public ResponseEntity<?> getIngredient(@PathVariable Long id) {
         Ingredient ingredient = this.ingredientService.getIngredient(id);
         if (ingredient == null) {
@@ -100,17 +93,12 @@ public class IngredientController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Удаление ингредиента", description = "нужно удалять по порядковому номеру")
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Ингредиент удален",
-                    content = {
-                            @Content(
-                                    mediaType = "aplication/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
-                            )
-                    }
-            )
-    })
+            @ApiResponse(responseCode = "200",description = "Ингредиент удален"),
+            @ApiResponse(responseCode = "400", description = "имеется ошибка в параметрах запроса"),
+            @ApiResponse(responseCode = "404", description = "такого действия не существует либо URL неверный в веб-приложении"),
+            @ApiResponse(responseCode = "500", description = "во время выполнения запроса произошла ошибка на сервере")})
+
+
     public ResponseEntity<Void> deleteIngredient(@PathVariable long id) {
         if (ingredientService.deleteIngredient(id)) {
             return ResponseEntity.ok().build();
