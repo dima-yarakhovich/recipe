@@ -28,9 +28,7 @@ public class IngredientServiceImpl implements IngredientServices {
         this.fileServiceIngredient = fileServiceIngredient;
     }
 
-    @PostConstruct
-    private void init() {
-    }
+
 
     @Override
     public Ingredient addIngredient(Ingredient ingredient) {

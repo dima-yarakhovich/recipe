@@ -96,7 +96,7 @@ public class RecipeController {
     @Operation(summary = "Редактирование рецепта", description = "можно редактировать по порядковому номеру")
     public ResponseEntity<Recipe> editRecipe(@PathVariable long id, @RequestBody Recipe recipe) {
         Recipe recipe1 = recipeService.editRecipe(id, recipe);
-        if (recipe == null) {
+        if (recipe1 == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(recipe);

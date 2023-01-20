@@ -122,7 +122,7 @@ public class IngredientController {
     })
     public ResponseEntity<Ingredient> editIngredient(@PathVariable long id, @RequestBody Ingredient ingredient) {
         Ingredient ingredient1 = ingredientService.editIngredient(id, ingredient);
-        if (ingredient == null) {
+        if (ingredient1 == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(ingredient);
