@@ -12,8 +12,12 @@ public class Recipe {
     private int cookingTime;
     private List<Ingredient> ingredients;
     private List<String> steps;
-    public Recipe(String s, Integer valueOf, String s1) {
+
+    public Recipe(String name, int cookingTime) {
+        this.name = name;
+        this.cookingTime = cookingTime;
     }
+
 
     @Override
     public String toString() {

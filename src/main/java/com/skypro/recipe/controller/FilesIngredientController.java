@@ -22,7 +22,7 @@ public class FilesIngredientController {
         this.fileServiceIngredient = fileServiceIngredient;
     }
 
-    @GetMapping(value = "/exportIngr")
+    @GetMapping(value = "/export")
     public ResponseEntity<InputStreamResource> downloadDataFile() throws FileNotFoundException {
         File file = fileServiceIngredient.getDataFileIngr();
         if (file.exists()) {                                                                                               //проверяем, что он существует
@@ -30,7 +30,7 @@ public class FilesIngredientController {
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_OCTET_STREAM)                                                       //заголовок запроса
                     .contentLength(file.length())
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"List_Ingr.json\"")        //чтобы добавить заголовок вручную
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"List_Ingredient.json\"")        //чтобы добавить заголовок вручную
                     .body(resource);                                                                                       //передаем тело/сам инпутстриим
 
         } else {
@@ -38,7 +38,7 @@ public class FilesIngredientController {
         }
     }
 
-    @PostMapping(value = "/importIngr", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> uploadDataFile(@RequestParam MultipartFile file) {
         fileServiceIngredient.cleanDataFileIngr();
         File dataFile = fileServiceIngredient.getDataFileIngr();

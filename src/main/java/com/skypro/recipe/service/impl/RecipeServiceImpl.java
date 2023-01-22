@@ -3,6 +3,7 @@ package com.skypro.recipe.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skypro.recipe.model.Ingredient;
 import com.skypro.recipe.model.Recipe;
 import com.skypro.recipe.service.FileServiceRecipe;
 import com.skypro.recipe.service.RecipeServices;
@@ -94,7 +95,7 @@ public class RecipeServiceImpl implements RecipeServices {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] array = StringUtils.split(line, "|");
-                Recipe recipe = new Recipe(array[0], Integer.valueOf(array[1]), array[2]);
+                Recipe recipe = new Recipe(String.valueOf(array[0]),Integer.valueOf(array[1]));
                 addRecipe(recipe);
             }
         }
