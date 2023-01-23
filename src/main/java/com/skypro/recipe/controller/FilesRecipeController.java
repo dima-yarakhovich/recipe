@@ -27,7 +27,7 @@ public class FilesRecipeController {
         this.fileServiceRecipe = fileServiceRecipe;
     }
 
-    @GetMapping(value = "/export")
+    @GetMapping(value = "/export/recipe")
     @Operation(summary = "Скачивание рецептов в формате txt",
             description = "можно скачать рецепты в txt")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Запрос выполнился"),
@@ -49,7 +49,7 @@ public class FilesRecipeController {
         }
     }
 
-    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/import/recipe", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Добавление рецептов из файла",
             description = "можно добавить рецепты в том числе из файла txt")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Запрос выполнился"),
