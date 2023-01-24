@@ -1,0 +1,32 @@
+###Получение ингредиента
+GET http://localhost:8080/ingridient/2
+###добавление ингредиента1
+POST http://localhost:8080/ingridient
+Content-Type: application/json
+
+{
+  "name": "Творог",
+"count": 250,
+"measurement": "гр."
+}
+
+###добавление ингредиента2
+POST http://localhost:8080/ingridient
+Content-Type: application/json
+
+{
+  "name": "Помидоры",
+  "count": 3,
+  "measurement": "шт."
+}
+
+###добавление ингредиента3
+POST http://localhost:8080/ingridient
+Content-Type: application/json
+
+{
+  "name": "Огурцы",
+  "count": 2,
+  "measurement": "шт."
+}
+
